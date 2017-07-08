@@ -1,0 +1,66 @@
+body { 
+	margin: 0;
+}
+
+.map-cont{
+	height: 100%;
+	width: 100%;
+}
+
+.marker-labels{
+	top: 10px;
+}
+
+.main{
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+}
+
+.body{
+	display: flex;
+	flex: 1;
+	background-color: #edecec;
+}
+
+.content{
+	flex: 1;
+	margin: 20px;
+}
+
+.build-alert-nav-menu{
+	flex: 0 0 15em;
+	order: -1;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.settingsCheckBox{
+	width: 24px !important;
+	min-width: 24px !important;
+}
+
+.icon-fail {
+	height: 64px !important;
+	width: 64px !important;
+	top: -8px !important;
+	fill: red !important;
+}
+
+.icon-success {
+	height: 64px !important;
+	width: 64px !important;
+	top: -8px !important;
+	fill: green !important;
+}
+
+.weatherCard {
+	width: 20%;
+	text-align: center;
+}
+
+.weatherCardContainer {
+	display: inline-flex;
+	width: 98%;
+}
