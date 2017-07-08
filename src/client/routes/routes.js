@@ -15,6 +15,7 @@ import Settings from '../components/settings.js';
 import Home from '../components/home.js';
 import Weather from '../components/weather.js'
 import Map from '../components/map.js';
+import Login from '../components/login.js';
 
 injectTapEventPlugin();
 
