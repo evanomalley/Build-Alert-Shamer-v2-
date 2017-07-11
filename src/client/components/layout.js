@@ -20,6 +20,7 @@ import {setWeather} from '../redux/actions/weatherActions.js';
 import { connect } from 'react-redux';
 
 var socket = io.connect();
+var Player = new Audio("/media/shame-1.mp3");
 
 @connect((store) => {
 	return {};
@@ -32,6 +33,7 @@ class Layout extends React.Component {
 		socket.on("TheWeather", this.processWeatherResponse.bind(this));
 		socket.on("Settings", this.processResponse.bind(this));
 		socket.on("buildResult", this.processBuildResultResponse.bind(this));
+		socket.on("buildBroke", this.processBuildBroke.bind(this));
 	}
 
 	processWeatherResponse(result){
@@ -44,6 +46,11 @@ class Layout extends React.Component {
 
 	processBuildResultResponse(result){
 		this.props.dispatch(addFeedItem(result));
+	}
+
+	processBuildBroke(sound){
+		Player = new Audio("/media/" + sound);
+		Player.play();
 	}
 
 	navigate(){
