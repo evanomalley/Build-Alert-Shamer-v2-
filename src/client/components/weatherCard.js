@@ -39,7 +39,7 @@ class WeatherCard extends React.Component {
 				<CardTitle title={this.props.day}/>
 				<CardText>
 					<img src={icon}/>
-					<h3>{this.props.high} {this.props.low}</h3>
+					<h3>High: {this.props.high}° Low: {this.props.low}°</h3>
 				</CardText>
 			</Card>
 		);

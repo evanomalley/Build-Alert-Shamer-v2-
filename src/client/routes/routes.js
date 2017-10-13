@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom'
 import style from '../components/buildAlert.scss';
-import injectTapEventPlugin from 'react-tap-event-plugin';
+//import injectTapEventPlugin from 'react-tap-event-plugin';
 import {Router, Route, IndexRoute, browserHistory} from 'react-router';
 import { Provider } from "react-redux";
 
@@ -17,7 +17,7 @@ import Weather from '../components/weather.js'
 import Map from '../components/map.js';
 import Login from '../components/login.js';
 
-injectTapEventPlugin();
+//injectTapEventPlugin();
 
 const app = document.getElementById("BuildAlertContainer");
 const routes = (<Route path="/" component={Layout}>
@@ -26,6 +26,7 @@ const routes = (<Route path="/" component={Layout}>
 					<Route path="weather" component={Weather}></Route>
 					<Route path="map" component={Map}></Route>
 					<Route path="settings" component={Settings}></Route>
+					<Route path="login" component={Login}/>
 				</Route>)
 
 ReactDOM.render(

@@ -8,6 +8,10 @@ import TextField from 'material-ui/TextField';
 
 class Login extends React.Component {
 
+    login() {
+
+    }
+
     render() {
         return (
             <Card>
@@ -23,7 +27,7 @@ class Login extends React.Component {
                     /><br />
                 </CardText>
                 <CardActions>
-                    <FlatButton label="Login" />
+                    <FlatButton label="Login" onClick={this.login}/>
                     <FlatButton label="Logout" />
                 </CardActions>
             </Card>

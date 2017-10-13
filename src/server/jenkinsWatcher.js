@@ -54,21 +54,22 @@ var jenkinsWatcher = {
 	getLastResult : function(socket){
 		if(lastResult !== null){
 		 	if(lastResult.result === 'FAILURE'){
-		 		this.getRandomSound();
+		 		var sound = this.getRandomSound();
+		 		socket.emit('buildBroke', sound)
 		 	}
 		 	socket.emit('buildResult', lastResult);
 		}
 	},
 
 	/**
-	* Gets a random sound from the list of enabled sounds and sends it to the
-	* frontend.
+	* Gets a random sound from the list of enabled sounds and returns it
 	*/
 	getRandomSound : function(){
 		if(mySounds.length > 0){
 			var sound = mySounds[Math.floor(Math.random()*mySounds.length)];
-			this.io.to(this.room).emit('buildBroke', sound);
+			return sound;
 		}
+		return '';
 	},
 
 	// given the data check the result
@@ -77,7 +78,8 @@ var jenkinsWatcher = {
 			if(result.result === 'FAILURE'){
 				console.log('failure');
 				this.io.to(this.room).emit('buildResult', result);
-				this.getRandomSound();
+				var sound = this.getRandomSound();
+				this.io.to(this.room).emit('buildBroke', sound);
 				this.fbClient.updateBuildStatus('Build is broken', result.number, result.result);
 				this.fbClient.sendMessage("Status", (result.number + " " + result.result).toString());
 				lastResult = result;

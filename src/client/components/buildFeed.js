@@ -30,8 +30,8 @@ class BuildFeed extends React.Component {
 		var index = 0;
 
 		results.forEach(function(item){
+			feedList.unshift(<Divider key = {index}/>);
 			if(item.result === "SUCCESS"){
-				feedList.unshift(<Divider key = {index}/>);
 				feedList.unshift(
 					<ListItem key={item.number} primaryText="SUCCESS" secondaryText={"Build# " + item.number} rightIcon={<SVS className="icon-success"/>}/>
 				);
