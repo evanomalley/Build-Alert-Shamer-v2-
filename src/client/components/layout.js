@@ -74,9 +74,6 @@ class Layout extends React.Component {
 									<ListItem primaryText="Weather" 
 										containerElement={<Link to={'/weather'}/>}
 										rightIcon={<CloudIcon/>} />
-									<ListItem primaryText="Map" 
-										containerElement={<Link to={'/map'}/>}
-										rightIcon={<MapIcon/>} />
 									<ListItem primaryText="Settings" 
 										containerElement={<Link to={'/settings'}/>}
 										rightIcon={<SettingsIcon/>} />

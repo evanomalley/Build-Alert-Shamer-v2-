@@ -15,7 +15,7 @@ var interval,
 module.exports = function (io) {
 
 	//set up the connection to firebase
-	fbClient.initSetup();
+	//fbClient.initSetup();
 
 	//set up the jenkins watcher
 	watcher.setUpWatcher(room, io, fbClient);

@@ -36,7 +36,7 @@ var jenkinsWatcher = {
 	checkBuild : function() {
 		var me = this;
 		var promise = new Promise(function(resolve, reject){
-
+			console.log("checking the build");
 			jenkins.last_build_info(config.project, function(err, data) {
 			  if (err){ 
 			  	console.log('Error checking build');
@@ -80,16 +80,16 @@ var jenkinsWatcher = {
 				this.io.to(this.room).emit('buildResult', result);
 				var sound = this.getRandomSound();
 				this.io.to(this.room).emit('buildBroke', sound);
-				this.fbClient.updateBuildStatus('Build is broken', result.number, result.result);
-				this.fbClient.sendMessage("Status", (result.number + " " + result.result).toString());
+			//	this.fbClient.updateBuildStatus('Build is broken', result.number, result.result);
+			//	this.fbClient.sendMessage("Status", (result.number + " " + result.result).toString());
 				lastResult = result;
 			}
 			if(result.result === 'SUCCESS'){
 				console.log('Success');
 				this.io.to(this.room).emit('buildResult', result);
 				lastResult = result;
-				this.fbClient.updateBuildStatus('Build is fine', result.number, result.result);
-				this.fbClient.sendMessage("Status", (result.number + " " + result.result).toString());
+			//	this.fbClient.updateBuildStatus('Build is fine', result.number, result.result);
+			//	this.fbClient.sendMessage("Status", (result.number + " " + result.result).toString());
 				lastResult = result;
 			}
 		}
