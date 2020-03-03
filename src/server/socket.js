@@ -15,7 +15,7 @@ var interval,
 module.exports = function (io) {
 
 	//set up the connection to firebase
-	//fbClient.initSetup();
+	fbClient.initSetup();
 
 	//set up the jenkins watcher
 	watcher.setUpWatcher(room, io, fbClient);
@@ -60,7 +60,7 @@ module.exports = function (io) {
 			});
 		}
 
-		watcher.getLastResult(socket);
+		watcher.getAllPreviousReults(socket);
 
 		if(sounds.length === 0){
 			loadSettings();
@@ -108,14 +108,14 @@ module.exports = function (io) {
 			}
 		});
 
-		socket.on('GetWeather', function(){
-			var promise = weather.getWeather();
-			promise.then( function(result) {
-				socket.emit('TheWeather', result);
-			}, function(err){
-				console.log("Error " + err);
-			});
-		});
+		// socket.on('GetWeather', function(){
+		// 	var promise = weather.getWeather();
+		// 	promise.then( function(result) {
+		// 		socket.emit('TheWeather', result);
+		// 	}, function(err){
+		// 		console.log("Error " + err);
+		// 	});
+		// });
 
 	});
 }

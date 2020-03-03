@@ -33,21 +33,21 @@ class BuildFeed extends React.Component {
 			feedList.unshift(<Divider key = {index}/>);
 			if(item.result === "SUCCESS"){
 				feedList.unshift(
-					<ListItem key={item.number} primaryText="SUCCESS" secondaryText={"Build# " + item.number} rightIcon={<SVS className="icon-success"/>}/>
+					<ListItem key={item.id} primaryText="SUCCESS" secondaryText={"Build# " + item.id} rightIcon={<SVS className="icon-success"/>}/>
 				);
 			} else {
 				feedList.unshift(
-					<ListItem key={item.number} primaryText="FAILURE" secondaryText={"Build# " + item.number} rightIcon={<SVD className="icon-fail"/>}/>
+					<ListItem key={item.id} primaryText="FAILURE" secondaryText={"Build# " + item.id} rightIcon={<SVD className="icon-fail"/>}/>
 				);
 			}
 			index+=1;
 		});
 
 		return (
-			<Card>
+			<Card className="inner-content">
 				<CardTitle title="Build Feed"/>
 				<CardText>
-				    <List>
+				    <List className="feed-list">
 				    	{feedList}
 				    </List>
 				</CardText>

@@ -9,6 +9,8 @@ var jenkins = jenkinsapi.init(config.jenkinsServer),
 	fbClient = null,
 	io = null,
 	interval = null,
+	previousResults = [],
+	results = [],
 	mySounds = [];
 
 var jenkinsWatcher = {
@@ -20,6 +22,7 @@ var jenkinsWatcher = {
 		console.log('setting up watcher');
 		this.checkBuild();
 		interval = setInterval(this.checkBuild.bind(this), timer * 60000);
+		this.checkPreviousBuilds();
 	},
 
 	updateWatcher : function(newTime){
@@ -40,10 +43,30 @@ var jenkinsWatcher = {
 			jenkins.last_build_info(config.project, function(err, data) {
 			  if (err){ 
 			  	console.log('Error checking build');
+			  	console.log(err);
 			  	reject(Error("oops"));
 			  } else {
 				resolve(data);
 				me.processResult(data);
+			}
+			});
+
+		});
+		return promise;
+	},
+
+	checkPreviousBuilds : function(){
+		var me = this;
+		var promise = new Promise(function(resolve, reject){
+			console.log("checking the build");
+			jenkins.all_builds(config.project, function(err, data) {
+			  if (err){ 
+			  	console.log('Error checking build');
+			  	console.log(err);
+			  	reject(Error("oops"));
+			  } else {
+				resolve(data);
+				results = data.reverse();
 			}
 			});
 
@@ -59,6 +82,12 @@ var jenkinsWatcher = {
 		 	}
 		 	socket.emit('buildResult', lastResult);
 		}
+	},
+
+	getAllPreviousReults: function(socket){
+		var me = this;
+
+		socket.emit('allPreviousResults', results);
 	},
 
 	/**
@@ -80,18 +109,25 @@ var jenkinsWatcher = {
 				this.io.to(this.room).emit('buildResult', result);
 				var sound = this.getRandomSound();
 				this.io.to(this.room).emit('buildBroke', sound);
-			//	this.fbClient.updateBuildStatus('Build is broken', result.number, result.result);
-			//	this.fbClient.sendMessage("Status", (result.number + " " + result.result).toString());
+				this.fbClient.updateBuildStatus('Build is broken', result.number, result.result);
+				this.fbClient.sendMessage("Status", (result.number + " " + result.result).toString());
 				lastResult = result;
 			}
 			if(result.result === 'SUCCESS'){
 				console.log('Success');
 				this.io.to(this.room).emit('buildResult', result);
 				lastResult = result;
-			//	this.fbClient.updateBuildStatus('Build is fine', result.number, result.result);
-			//	this.fbClient.sendMessage("Status", (result.number + " " + result.result).toString());
-				lastResult = result;
+				this.fbClient.updateBuildStatus('Build is fine', result.number, result.result);
+				this.fbClient.sendMessage("Status", (result.number + " " + result.result).toString());
+			//	lastResult = result;
 			}
+			else {
+				this.io.to(this.room).emit('updateBuildInProgress', result);
+			}
+			if(results.length === 25){
+				results.shift();
+			}
+			results.push(lastResult);
 		}
 	}
 }

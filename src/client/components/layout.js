@@ -15,7 +15,7 @@ import { Link } from 'react-router';
 import io from 'socket.io-client';
 
 import {setSettings} from '../redux/actions/settingsActions.js';
-import {addFeedItem} from '../redux/actions/buildFeedActions.js';
+import {addFeedItem, addAllFeedItems, addCurrentBuildStatus} from '../redux/actions/buildFeedActions.js';
 import {setWeather} from '../redux/actions/weatherActions.js';
 import { connect } from 'react-redux';
 
@@ -34,6 +34,8 @@ class Layout extends React.Component {
 		socket.on("Settings", this.processResponse.bind(this));
 		socket.on("buildResult", this.processBuildResultResponse.bind(this));
 		socket.on("buildBroke", this.processBuildBroke.bind(this));
+		socket.on("allPreviousResults", this.processAlBuildResponses.bind(this));
+		socket.on("updateBuildInProgress", this.processBuildInProgressMessage.bind(this));
 	}
 
 	processWeatherResponse(result){
@@ -51,6 +53,14 @@ class Layout extends React.Component {
 	processBuildBroke(sound){
 		Player = new Audio("/media/" + sound);
 		Player.play();
+	}
+
+	processAlBuildResponses(results){
+		this.props.dispatch(addAllFeedItems(results));
+	}
+
+	processBuildInProgressMessage(status){
+		this.props.dispatch(addCurrentBuildStatus(status));
 	}
 
 	navigate(){

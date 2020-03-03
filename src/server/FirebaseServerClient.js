@@ -21,18 +21,30 @@ var firebaseServerClient = {
             databaseURL: config.databaseURL
         });
 
-        ref = fireApp.database().ref('RecentBuild'),
+        var db = fireApp.database();
+
+        ref = db.ref('RecentBuild'),
         serverKey = config.serverKey,
         topic = "/topics/BuildStatus",
         fcmCli = new FCM(serverKey);
-        pastBuildsRef = fireApp.database().ref('PastBuilds');
+        pastBuildsRef = db.ref('PastBuilds');
 
+        var newRef = db.ref('Testdata');
+
+        newRef.set({
+            hello: 'world'
+        });
+
+
+        console.log('Firebase Conntection set up');
         //read the past builds from firebase
         pastBuildsRef.on('value', function(snapshot) {
             pastBuildsArray = [];
+            console.log('reading Firebase')
             snapshot.forEach(function(urlSnapshot) {
                 pastBuildsArray.push(urlSnapshot.key);
             });
+            console.log('read the past devices');
             buildsCount = pastBuildsArray.length;
         });
     },
