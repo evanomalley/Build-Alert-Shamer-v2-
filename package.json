@@ -41,7 +41,7 @@
     "hawk": "^7.0.10",
     "node-sass": "^4.13.1",
     "node-weatherunderground": "^1.2.0",
-    "npm": "^6.8.0",
+    "npm": "^6.13.4",
     "redux-logger": "^2.8.1",
     "request": "^2.88.0",
     "stringstream": "^1.0.0",
